@@ -47,7 +47,7 @@ class UpdateFragment : Fragment() {
             updateItem()
         }
 
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
 
     }
     private fun updateItem(){

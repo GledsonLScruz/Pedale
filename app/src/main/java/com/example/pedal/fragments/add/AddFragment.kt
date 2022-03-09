@@ -1,5 +1,8 @@
 package com.example.pedal.fragments.add
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
@@ -8,14 +11,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
+import coil.load
+import coil.request.ImageRequest
+import coil.request.SuccessResult
+import coil.transform.RoundedCornersTransformation
 import com.example.pedal.R
 import com.example.pedal.model.User
 import com.example.pedal.viewmodel.UserViewModel
 import com.example.pedal.databinding.FragmentAddBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class AddFragment : Fragment() {
@@ -42,6 +54,12 @@ class AddFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.add.setOnClickListener{
             insertData()
+        }
+
+        binding.img.load("https://blog.zoov.io/content/images/2021/04/zoov_rendu_IMG_2577-2.jpg"){
+            crossfade(true)
+            crossfade(400)
+            transformations(RoundedCornersTransformation(100f))
         }
     }
 
