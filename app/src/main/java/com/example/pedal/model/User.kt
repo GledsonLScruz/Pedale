@@ -10,7 +10,11 @@ import kotlinx.parcelize.Parcelize
 data class User(
     @PrimaryKey(autoGenerate = true)
     val id : Int,
-    val firstName: String,
-    val lastName: String,
-    val age: Int
+    val name: String,
+    val description: String,
+    val date: String,
+    val start: String,
+    val destiny: String,
+    val distance: String,
+    val type: String
 ) : Parcelable

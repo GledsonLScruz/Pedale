@@ -11,23 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.pedal.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding : ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
-        //navController = navHostFragment.navController
-        //appBarConfiguration = AppBarConfiguration(navController.graph)
-        //setupActionBarWithNavController(navController, appBarConfiguration)
+        setContentView(R.layout.activity_main)
     }
-
-    //override fun onSupportNavigateUp(): Boolean {
-    //    return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    // }
 }

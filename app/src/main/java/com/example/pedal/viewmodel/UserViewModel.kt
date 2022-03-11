@@ -3,6 +3,7 @@ package com.example.pedal.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pedal.data.UserDatabase
 import com.example.pedal.repository.UserRepository
@@ -14,6 +15,10 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
 
     val readAllData : LiveData<List<User>>
     private val repository : UserRepository
+
+    private val _type = MutableLiveData<String>()
+    val type: LiveData<String>
+        get() = _type
 
     init{
         val userDao = UserDatabase.getDatabase(application).userDao()
@@ -41,5 +46,8 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllUser()
         }
+    }
+    fun changetype(type: String){
+        _type.value = type
     }
 }

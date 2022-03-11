@@ -16,31 +16,49 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <EditText
-        android:id="@+id/nome_pedal"
+    <TextView
+        android:id="@+id/name"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Pedal Urbano"
 
+        android:text="Pedal Urbano"
+        android:textSize="24sp"
+        android:textColor="@color/white"
 
         app:layout_constraintTop_toBottomOf="@id/img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="-45dp"
+        android:layout_marginBottom="10dp"
+        />
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "Passeio em grupo com amigos"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@id/name"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         />
-    <EditText
-        android:id="@+id/desc_pedal"
+    <TextView
+        android:id="@+id/date"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Descrição:\nPasseio em grupo com amigos"
+        android:text= "02/04/2022"
+        android:textSize="20sp"
 
-        app:layout_constraintTop_toBottomOf="@id/nome_pedal"
+        app:layout_constraintTop_toBottomOf="@id/description"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,14 +67,15 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
-    <EditText
-        android:id="@+id/data_pedal"
+    <TextView
+        android:id="@+id/start"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Data"
+        android:text="Rua joão francisco"
+        android:textSize="20sp"
 
-        app:layout_constraintTop_toBottomOf="@id/desc_pedal"
+        app:layout_constraintTop_toBottomOf="@id/date"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,31 +84,15 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
-    <EditText
-        android:id="@+id/partida_pedal"
+    <TextView
+        android:id="@+id/destiny"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Partida"
+        android:text="Rua Araujo joão"
+        android:textSize="20sp"
 
-        app:layout_constraintTop_toBottomOf="@id/data_pedal"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        />
-
-    <EditText
-        android:id="@+id/destino_pedal"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Destino"
-
-        app:layout_constraintTop_toBottomOf="@id/partida_pedal"
+        app:layout_constraintTop_toBottomOf="@id/start"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,71 +101,57 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         />
-
     <TextView
         android:id="@+id/distance"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/destino_pedal"
-        android:textSize="22dp"
-        android:text="0km"
-        android:textStyle="bold"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/purple_500"
-        />
-    <RadioGroup
-        android:id="@+id/tipe_do_pedal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/distance"
+        android:text="27 Km"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@id/destiny"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <RadioButton
-            android:id="@+id/urbano"
-            android:text="@string/urbano_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/purple_500"
-            android:layout_marginEnd="60dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:checked="true"
-             />
-        <RadioButton
-            android:id="@+id/trilha"
-            android:text="@string/trilha_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/orange"
-            android:clickable="true"
-            android:focusable="true"/>
-    </RadioGroup>
+        />
+    <TextView
+        android:id="@+id/type"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Urbano"
+        android:textSize="20sp"
+
+        app:layout_constraintTop_toBottomOf="@id/distance"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
     <Button
-        android:id="@+id/add"
+        android:id="@+id/delete_button"
 
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="Criar novo Passeio"
+        android:text="Excluir"
 
-        app:layout_constraintTop_toBottomOf="@id/tipe_do_pedal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="20dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back_fab"
+        android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
@@ -174,6 +163,20 @@
         android:src="@drawable/ic_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/edit_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="18dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:tint = "@color/white"
+        app:backgroundTint="@color/transparent"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,33 +1,21 @@
 package com.example.pedal.fragments.add
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
-import androidx.core.graphics.drawable.toDrawable
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import coil.ImageLoader
 import coil.load
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import coil.transform.RoundedCornersTransformation
 import com.example.pedal.R
 import com.example.pedal.model.User
 import com.example.pedal.viewmodel.UserViewModel
 import com.example.pedal.databinding.FragmentAddBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 class AddFragment : Fragment() {
@@ -39,6 +27,8 @@ class AddFragment : Fragment() {
 
     private lateinit var mUserViewModel : UserViewModel
 
+    private var type = "Urbano"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +37,7 @@ class AddFragment : Fragment() {
         _binding = FragmentAddBinding.inflate(inflater, container, false)
         val view = binding.root
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        mUserViewModel.changetype("Urbano")
         return view
     }
 
@@ -56,10 +47,24 @@ class AddFragment : Fragment() {
             insertData()
         }
 
-        binding.img.load("https://blog.zoov.io/content/images/2021/04/zoov_rendu_IMG_2577-2.jpg"){
+        binding.img.load(R.drawable.urbano){
             crossfade(true)
             crossfade(400)
-            transformations(RoundedCornersTransformation(100f))
+        }
+
+
+        binding.tipeDoPedal.setOnCheckedChangeListener{ group, checkedId ->
+            val radio: RadioButton = group.findViewById(checkedId)
+            mUserViewModel.changetype(radio.text.toString())
+
+        }
+
+        mUserViewModel.type.observe(viewLifecycleOwner, Observer { checked ->
+            changeUI(checked)
+        })
+
+        binding.backFab.setOnClickListener {
+            findNavController().navigateUp()
         }
     }
 
@@ -70,13 +75,17 @@ class AddFragment : Fragment() {
 
 
     private fun insertData() {
-        val fisrtname = binding.firstname.text.toString()
-        val lastname = binding.lastname.text.toString()
-        val age = binding.age.text
+        val name = binding.nomePedal.text.toString()
+        val description = binding.descPedal.text.toString()
+        val date = binding.dataPedal.text.toString()
+        val start = binding.partidaPedal.text.toString()
+        val destiny = binding.destinoPedal.text.toString()
+        val distance = binding.distance.text.toString()
 
-        if(inputCheck(fisrtname, lastname,age)){
+
+        if(inputCheck(name,description,date,start,destiny)){
             //create user object
-            val user = User(0,fisrtname,lastname,Integer.parseInt(age.toString()))
+            val user = User(0,name,description,date,start,destiny,distance,type)
             //add Data to database
             mUserViewModel.addUser(user)
             Toast.makeText(requireContext(), "Sucessfully added",Toast.LENGTH_SHORT).show()
@@ -88,7 +97,35 @@ class AddFragment : Fragment() {
 
     }
 
-    private fun inputCheck(firstName : String, lastName: String, age : Editable) : Boolean{
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
+    private fun inputCheck(name : String,
+                           description: String,
+                           date : String,
+                           start: String,
+                           destiny: String) : Boolean{
+        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(description) && TextUtils.isEmpty(date) && TextUtils.isEmpty(start) && TextUtils.isEmpty(destiny))
+    }
+    private fun changeUI(check : String){
+        if (check == "Urbano"){
+            binding.img.load(R.drawable.urbano){
+                crossfade(true)
+                crossfade(400)
+            }
+            binding.add.setBackgroundColor(resources.getColor(R.color.purple_500))
+            binding.nomePedal.hint = "Pedal Urbano"
+            binding.descPedal.hint = "Passeio em grupo com amigos"
+            binding.distance.setTextColor(resources.getColor(R.color.purple_500))
+            type = "Urbano"
+        }
+        if (check == "Trilha"){
+            binding.img.load(R.drawable.trilha){
+                crossfade(true)
+                crossfade(400)
+            }
+            binding.add.setBackgroundColor(resources.getColor(R.color.orange))
+            binding.nomePedal.hint = "Trilha"
+            binding.descPedal.hint = "Trilha em grupo com amigos"
+            binding.distance.setTextColor(resources.getColor(R.color.orange))
+            type = "Trilha"
+        }
     }
 }

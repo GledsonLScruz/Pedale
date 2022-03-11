@@ -1,17 +1,16 @@
 package com.example.pedal.fragments.update
 
-import android.app.AlertDialog
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import coil.load
 import com.example.pedal.R
-import com.example.pedal.databinding.FragmentAddBinding
 import com.example.pedal.databinding.FragmentUpdateBinding
 import com.example.pedal.model.User
 import com.example.pedal.viewmodel.UserViewModel
@@ -20,13 +19,11 @@ import com.example.pedal.viewmodel.UserViewModel
 class UpdateFragment : Fragment() {
 
     private var _binding: FragmentUpdateBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-
     private lateinit var mUserViewModel : UserViewModel
-
     private val args by navArgs<UpdateFragmentArgs>()
+
+    private var type = "Urbano"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,24 +36,36 @@ class UpdateFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.updateFirstname.setText(args.currentUser.firstName)
-        binding.updateLastname.setText(args.currentUser.lastName)
-        binding.updateAge.setText(args.currentUser.age.toString())
+        binding.name.setText(args.currentUser.name)
+        binding.description.setText(args.currentUser.description)
+        binding.date.setText(args.currentUser.date)
+        binding.start.setText(args.currentUser.start)
+        binding.destiny.setText(args.currentUser.destiny)
+        binding.distance.setText(args.currentUser.distance)
+
+        changeUI(args.currentUser.type)
+
+        binding.backFab.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.update.setOnClickListener {
             updateItem()
         }
-
-        //setHasOptionsMenu(true)
-
+        mUserViewModel.type.observe(viewLifecycleOwner, Observer { checked ->
+            changeUI(checked)
+        })
     }
     private fun updateItem(){
-        val firstName = binding.updateFirstname.text.toString()
-        val lastName = binding.updateLastname.text.toString()
-        val age = Integer.parseInt(binding.updateAge.text.toString())
+        val name = binding.name.text.toString()
+        val description = binding.description.text.toString()
+        val date = binding.date.text.toString()
+        val start = binding.start.text.toString()
+        val destiny = binding.destiny.text.toString()
+        val distance = binding.distance.text.toString()
 
-        if (inputCheck(firstName,lastName,binding.updateAge.text)){
-            val updateUser = User(args.currentUser.id,firstName,lastName,age)
+        if (inputCheck(name,description,date,start,destiny,distance)){
+            val updateUser = User(args.currentUser.id,name,description,date,start,destiny,distance,type)
             mUserViewModel.updateUser(updateUser)
             Toast.makeText(requireContext(),"Updated Sucessfully",Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
@@ -65,34 +74,35 @@ class UpdateFragment : Fragment() {
             Toast.makeText(requireContext(),"Please feal all the fields",Toast.LENGTH_SHORT).show()
         }
     }
-    private fun inputCheck(firstName : String, lastName: String, age : Editable) : Boolean{
-        return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
+    private fun inputCheck(name : String,
+                           description: String,
+                           date : String,
+                           start: String,
+                           destiny: String,
+                           distace: String) : Boolean{
+        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(description) && TextUtils.isEmpty(date) && TextUtils.isEmpty(start) && TextUtils.isEmpty(destiny) && TextUtils.isEmpty(distace) )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.delete_menu,menu)
-
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.menu_delete){
-            deleteUser()
+    private fun changeUI(check : String){
+        if (check == "Urbano"){
+            binding.img.load(R.drawable.urbano){
+                crossfade(true)
+                crossfade(400)
+            }
+            binding.update.setBackgroundColor(resources.getColor(R.color.purple_500))
+            binding.distance.setTextColor(resources.getColor(R.color.purple_500))
+            binding.urbano.isChecked = true
+            type = "Urbano"
         }
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun deleteUser() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes"){ _,_ ->
-            mUserViewModel.deleteUser(args.currentUser)
-            Toast.makeText(
-                requireContext(),
-                "Sucessfully removed: ${args.currentUser.firstName}",
-                Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        if (check == "Trilha"){
+            binding.img.load(R.drawable.trilha){
+                crossfade(true)
+                crossfade(400)
+            }
+            binding.update.setBackgroundColor(resources.getColor(R.color.orange))
+            binding.distance.setTextColor(resources.getColor(R.color.orange))
+            binding.trilha.isChecked = true
+            type = "Trilha"
         }
-        builder.setNegativeButton("No"){_,_ ->}
-        builder.setTitle("Delete ${args.currentUser.firstName}?")
-        builder.setMessage("Are you sure you want to delete ${args.currentUser.firstName}?")
-        builder.create().show()
     }
 }
