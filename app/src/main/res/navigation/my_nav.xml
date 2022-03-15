@@ -26,8 +26,8 @@
         android:label="Add"
         tools:layout="@layout/fragment_add" >
         <action
-            android:id="@+id/action_addFragment_to_listFragment"
-            app:destination="@id/listFragment" />
+            android:id="@+id/action_addFragment_to_addTwoFragment"
+            app:destination="@id/addTwoFragment" />
     </fragment>
     <fragment
         android:id="@+id/updateFragment"
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.pedal.fragments.ProfileFragment"
+        android:name="com.example.pedal.fragments.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
@@ -68,6 +68,24 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addTwoFragment"
+        android:name="com.example.pedal.fragments.add.AddTwoFragment"
+        android:label="fragment_add_two"
+        tools:layout="@layout/fragment_add_two" >
+        <action
+            android:id="@+id/action_addTwoFragment_to_addThreeFragment"
+            app:destination="@id/addThreeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addThreeFragment"
+        android:name="com.example.pedal.fragments.add.AddThreeFragment"
+        android:label="fragment_add_three"
+        tools:layout="@layout/fragment_add_three" >
+        <action
+            android:id="@+id/action_addThreeFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
 </navigation>

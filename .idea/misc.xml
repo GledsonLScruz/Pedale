@@ -5,8 +5,11 @@
       <map>
         <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/drawable/corner_top.xml" value="0.3859375" />
         <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/activity_main.xml" value="0.2861111111111111" />
+        <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/adress_item.xml" value="0.2465277777777778" />
         <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/custom_row.xml" value="0.25" />
-        <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_add.xml" value="0.2" />
+        <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_add.xml" value="0.25" />
+        <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_add_three.xml" value="0.35572916666666665" />
+        <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_add_two.xml" value="0.25" />
         <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_list.xml" value="0.25" />
         <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_login.xml" value="0.2465277777777778" />
         <entry key="..\:/Users/gleds/AndroidStudioProjects/Pedal/app/src/main/res/layout/fragment_profile.xml" value="0.2465277777777778" />

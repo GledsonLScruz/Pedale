@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/wallpaper_ciclism"/>
+        android:src="@drawable/wallpaper_ciclism" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -28,10 +28,10 @@
             android:padding="25dp">
 
             <TextView
-                android:id="@+id/Pedal_name_txt"
+                android:id="@+id/Pedal_data_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Título"
+                android:text="Local de chegada"
                 android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
@@ -39,111 +39,60 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 />
-
-
-            <EditText
-
-                android:id="@+id/nome_pedal"
+            <AutoCompleteTextView
+                android:id="@+id/partida_pedal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Pedal Urbano"
-
-                android:drawableStart="@drawable/ic_ciclism"
-                android:drawablePadding="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Pedal_name_txt"
+                android:hint="Start Typing Location"
+                android:padding="12dp"
+                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Pedal_data_txt"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/partida_pedal"
+                app:layout_constraintStart_toStartOf="@id/partida_pedal"
+                app:layout_constraintEnd_toEndOf="@id/partida_pedal"
+                tools:listitem="@layout/adress_item"
+                android:visibility="visible"
+                android:clickable="true"
+                android:focusable="true"/>
 
             <TextView
-                android:id="@+id/Pedal_desc_txt"
+                android:id="@+id/Pedal_distancia_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Descrição"
+                android:text="Distância"
                 android:textSize="24dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nome_pedal"
-
+                app:layout_constraintTop_toBottomOf="@id/partida_pedal"
                 android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
                 />
-
-            <EditText
-                android:id="@+id/desc_pedal"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-
-                android:drawableStart="@drawable/ic_desc"
-                android:drawablePadding="10dp"
-
-                android:layout_marginTop="10dp"
-
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:hint="Passeio com amigos"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Pedal_desc_txt" />
-
 
             <TextView
-                android:id="@+id/Pedal_tipotxt"
+                android:id="@+id/distancia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tipo"
-                android:textSize="24dp"
-                android:textStyle="bold"
+                android:text="25 km"
+                android:textSize="16dp"
                 android:textColor="@color/black"
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/desc_pedal"
-
-                android:layout_marginTop="10dp"
-                />
-
-            <RadioGroup
-                android:id="@+id/tipe_do_pedal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/Pedal_distancia_txt"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/Pedal_tipotxt">
+                />
 
-                <RadioButton
-                    android:id="@+id/urbano"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="60dp"
-                    android:buttonTint="@color/purple_500"
-                    android:checked="true"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="@string/urbano_txt" />
-
-                <RadioButton
-                    android:id="@+id/trilha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/orange"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="@string/trilha_txt" />
-            </RadioGroup>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -163,7 +112,7 @@
         app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/foward_fab"
+        android:id="@+id/sucess_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -172,9 +121,9 @@
         android:layout_marginBottom="18dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_forward"
+        android:src="@drawable/ic_baseline_check_24"
 
-        app:backgroundTint="@color/purple_500"
+        app:backgroundTint="@color/green"
         app:tint="@color/white" />
 
 </RelativeLayout>
