@@ -71,7 +71,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
 
     val recycler_is_view: MutableLiveData<Boolean> = MutableLiveData()
 
-    val start_or_end: MutableLiveData<Int> = MutableLiveData()
+    var getDistance = false
 
 
     fun getInfo(input: List<Adress>){
@@ -97,7 +97,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
     private val _chegada: MutableLiveData<String> = MutableLiveData()
     val chegada: LiveData<String>
         get() = _chegada
-    val _distancia: MutableLiveData<Float> = MutableLiveData()
+    val _distancia: MutableLiveData<String> = MutableLiveData()
 
     fun changetype(type: String){
         _type.value = type
@@ -107,8 +107,8 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         _titulo.value = tituto
         _desc.value = description
     }
-    fun parttwo(partida:String){
-        _date.value = "algumadata"
+    fun parttwo(partida:String,date:String){
+        _date.value = date
         _partida.value = partida
     }
     fun parttree(chegada:String){
@@ -121,7 +121,8 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
     private fun distanceInMeter(startLat: Double, startLon: Double, endLat: Double, endLon: Double){
         var results = FloatArray(1)
         Location.distanceBetween(startLat,startLon,endLat,endLon,results)
-        _distancia.value = results[0]
+        val dist_final = String.format("%.2f", (results[0] / 1000))
+        _distancia.value = dist_final
     }
 
     var lat_start: Double = 0.0
@@ -129,15 +130,14 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
     var lat_end: Double = 0.0
     var long_end: Double = 0.0
 
-    fun latlong(lat:Double,long: Double){
-        if (start_or_end.value == 1){
-            lat_start  = lat
-            long_start = long
-        }
-        else {
+    fun latlong(lat:Double,long: Double,fazer: Boolean){
+        if (fazer) {
             lat_end = lat
             long_end = long
             distanceInMeter(lat_start,long_start,lat_end,long_end)
+        } else{
+            lat_start  = lat
+            long_start = long
         }
     }
 

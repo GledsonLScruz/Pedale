@@ -32,7 +32,7 @@ class AdressAdapter(val vm : UserViewModel): RecyclerView.Adapter<AdressAdapter.
 
         holder.rowlayout.setOnClickListener {
             vm.adressSelected(currentItem.infoadress)
-            vm.latlong(currentItem.lat,currentItem.long)
+            vm.latlong(currentItem.lat,currentItem.long,vm.getDistance)
         }
 
     }

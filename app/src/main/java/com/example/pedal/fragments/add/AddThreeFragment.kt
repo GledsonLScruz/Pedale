@@ -60,7 +60,8 @@ class AddThreeFragment : Fragment() {
         mUserViewModel.recycler_is_view.value = true
         mUserViewModel.getDataFromApi(" ")
         mUserViewModel.adressSelected(" ")
-        mUserViewModel.start_or_end.value = 1
+
+        mUserViewModel.getDistance = true
 
 
         adapter = AdressAdapter(mUserViewModel)
@@ -127,7 +128,6 @@ class AddThreeFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        mUserViewModel.start_or_end.value = 1
     }
 
     override fun onDestroyView() {
@@ -146,6 +146,7 @@ class AddThreeFragment : Fragment() {
             Toast.makeText(requireContext(), "Criado com sucesso!",Toast.LENGTH_SHORT).show()
             //navigateback
             findNavController().navigateWithAnimations(AddThreeFragmentDirections.actionAddThreeFragmentToListFragment())
+            mUserViewModel.getDistance = false
         }else{
             Toast.makeText(requireContext(), "Preencha todos os campos",Toast.LENGTH_SHORT).show()
         }

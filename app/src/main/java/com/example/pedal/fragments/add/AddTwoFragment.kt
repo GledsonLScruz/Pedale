@@ -1,6 +1,7 @@
 package com.example.pedal.fragments.add
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
@@ -36,6 +37,8 @@ import com.example.pedal.utils.navigateWithAnimations
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 class AddTwoFragment : Fragment() {
@@ -48,6 +51,8 @@ class AddTwoFragment : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
     private lateinit var adapter: AdressAdapter
 
+    private lateinit var datepedals : String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,7 +63,7 @@ class AddTwoFragment : Fragment() {
 
         mUserViewModel = (activity as MainActivity).viewmodel()
         changeUI(mUserViewModel.type.value.toString())
-        mUserViewModel.start_or_end.value = 0
+
 
         adapter = AdressAdapter(mUserViewModel)
         val recyclerView = binding.recyclerView
@@ -76,6 +81,21 @@ class AddTwoFragment : Fragment() {
         }
         binding.backFab.setOnClickListener {
             findNavController().navigateUp()
+        }
+        binding.datePedal.setOnClickListener {
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+
+            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+                datepedals = "" + dayOfMonth + "/" + monthOfYear + "/" + year
+
+            }, year, month, day)
+
+            dpd.show()
         }
 
 
@@ -120,10 +140,6 @@ class AddTwoFragment : Fragment() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        mUserViewModel.start_or_end.value = 0
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -137,7 +153,7 @@ class AddTwoFragment : Fragment() {
 
 
         if(!(TextUtils.isEmpty(start))){
-            mUserViewModel.parttwo(start)
+            mUserViewModel.parttwo(start,datepedals)
             findNavController().navigateWithAnimations(AddTwoFragmentDirections.actionAddTwoFragmentToAddThreeFragment())
         }else{
             Toast.makeText(requireContext(), "Preencha todos os campos",Toast.LENGTH_SHORT).show()
