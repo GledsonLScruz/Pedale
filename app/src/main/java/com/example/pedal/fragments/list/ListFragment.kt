@@ -63,7 +63,7 @@ class ListFragment : Fragment() {
             mUserViewModel.deleteAllUser()
             Toast.makeText(
                 requireContext(),
-                "Sucessfully removed eveything",
+                "Tudo apagado com sucesso!",
                 Toast.LENGTH_SHORT).show()
         }
         builder.setNegativeButton("No"){_,_ ->}

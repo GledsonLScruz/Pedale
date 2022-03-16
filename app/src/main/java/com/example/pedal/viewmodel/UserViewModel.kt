@@ -116,6 +116,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
     }
     fun createnewtour(){
         addUser(User(0,_titulo.value.toString(),_desc.value.toString(),_date.value.toString(),_partida.value.toString(),_chegada.value.toString(),_distancia.value.toString(),_type.value.toString()))
+        adressSelected("")
     }
 
     private fun distanceInMeter(startLat: Double, startLon: Double, endLat: Double, endLon: Double){

@@ -145,7 +145,7 @@ class AddThreeFragment : Fragment() {
             mUserViewModel.createnewtour()
             Toast.makeText(requireContext(), "Criado com sucesso!",Toast.LENGTH_SHORT).show()
             //navigateback
-            findNavController().navigateWithAnimations(AddThreeFragmentDirections.actionAddThreeFragmentToListFragment())
+            findNavController().navigate(R.id.action_addThreeFragment_to_listFragment)
             mUserViewModel.getDistance = false
         }else{
             Toast.makeText(requireContext(), "Preencha todos os campos",Toast.LENGTH_SHORT).show()

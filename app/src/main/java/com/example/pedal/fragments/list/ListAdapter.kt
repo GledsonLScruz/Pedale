@@ -42,9 +42,15 @@ class ListAdapter(val findNavController: NavController):RecyclerView.Adapter<Lis
         holder.age_txt.text = currentItem.date
 
         if (currentItem.type == "Urbano"){
-            holder.img.load(R.drawable.urbano)
+            holder.img.load(R.drawable.urbano){
+                crossfade(true)
+                crossfade(400)
+            }
         }else{
-            holder.img.load(R.drawable.trilha)
+            holder.img.load(R.drawable.trilha){
+                crossfade(true)
+                crossfade(400)
+            }
         }
 
         holder.rowlayout.setOnClickListener {

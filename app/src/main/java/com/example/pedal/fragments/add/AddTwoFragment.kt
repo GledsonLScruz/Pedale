@@ -64,7 +64,7 @@ class AddTwoFragment : Fragment() {
         mUserViewModel = (activity as MainActivity).viewmodel()
         changeUI(mUserViewModel.type.value.toString())
 
-
+        datepedals = "0/0/0"
         adapter = AdressAdapter(mUserViewModel)
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
@@ -74,6 +74,7 @@ class AddTwoFragment : Fragment() {
         return view
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fowardFab.setOnClickListener{
@@ -92,6 +93,7 @@ class AddTwoFragment : Fragment() {
             val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
 
                 datepedals = "" + dayOfMonth + "/" + monthOfYear + "/" + year
+                binding.dataSelecionada.text = "$dayOfMonth/$monthOfYear/$year"
 
             }, year, month, day)
 

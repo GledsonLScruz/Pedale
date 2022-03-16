@@ -109,7 +109,7 @@ class AddFragment : Fragment() {
             }
             binding.fowardFab.setBackgroundColor(resources.getColor(R.color.purple_500))
             binding.nomePedal.hint = "Pedal Urbano"
-            binding.descPedal.hint = "Passeio em grupo com amigos"
+            binding.descPedal.hint = "Passeio com amigos"
             binding.nomePedal.setTextColor(resources.getColor(R.color.purple_500))
         }
         if (check == "Trilha"){
@@ -119,7 +119,7 @@ class AddFragment : Fragment() {
             }
             binding.fowardFab.setBackgroundColor(resources.getColor(R.color.orange))
             binding.nomePedal.hint = "Trilha"
-            binding.descPedal.hint = "Trilha em grupo com amigos"
+            binding.descPedal.hint = "Trilha com amigos"
             binding.nomePedal.setTextColor(resources.getColor(R.color.orange))
         }
     }

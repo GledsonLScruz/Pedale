@@ -1,35 +1,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="2dip"
-    android:paddingBottom="2dip"
+    android:padding="5dp"
     android:id="@+id/item"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/location_img"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_location"/>
-
     <TextView
         android:id="@+id/name_adress"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dip"
-        android:textAlignment="viewStart"
-        android:textAppearance="?android:attr/textAppearanceListItem"
         android:text="Rua doutor sebastião pedrosa"
-        android:layout_toEndOf="@id/location_img"/>
+        android:textAlignment="viewStart"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
 
     <TextView
         android:id="@+id/info_adress"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="viewStart"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Jose pinheir,campina grande - PB 58-407548, Brazil"
         android:layout_below="@id/name_adress"
-        android:layout_alignLeft="@id/name_adress"/>
-
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/info_adress"
+        android:layout_marginTop="5dp"/>
 </RelativeLayout>

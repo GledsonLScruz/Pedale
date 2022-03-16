@@ -17,14 +17,23 @@
         />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Título:"
+        app:layout_constraintBottom_toTopOf="@id/name"
+        app:layout_constraintStart_toStartOf="@id/name"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"/>
+
+    <TextView
         android:id="@+id/name"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        android:textStyle="bold"
         android:text="Pedal Urbano"
         android:textSize="24sp"
-        android:textColor="@color/white"
 
         app:layout_constraintTop_toBottomOf="@id/img"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,122 +42,198 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="-45dp"
         android:layout_marginBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "Passeio em grupo com amigos"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toBottomOf="@id/name"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/date"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text= "02/04/2022"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toBottomOf="@id/description"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/start"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rua joão francisco"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toBottomOf="@id/date"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/destiny"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Rua Araujo joão"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toBottomOf="@id/start"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/distance"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="27 Km"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toBottomOf="@id/destiny"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/type"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Urbano"
-        android:textSize="20sp"
-
-        app:layout_constraintTop_toBottomOf="@id/distance"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
         />
 
-    <Button
-        android:id="@+id/delete_button"
-
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Excluir"
-
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/img"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"/>
+        app:cardElevation="0dp"
+        android:backgroundTint="@color/white">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="20dp"
+                tools:ignore="RtlSymmetry">
+
+                <TextView
+                    android:id="@+id/desc_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descrição:"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    />
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Passeio em grupo com amigos"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+
+                    app:layout_constraintTop_toBottomOf="@id/desc_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="3dp"
+                    />
+                <TextView
+                    android:id="@+id/desc_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Data:"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/description"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "24/2/2002"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+
+                    app:layout_constraintTop_toBottomOf="@id/desc_date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="3dp"
+                    />
+                <TextView
+                    android:id="@+id/desc_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ponto de partida:"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/date"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    />
+                <TextView
+                    android:id="@+id/start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Rua alves joão"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+
+                    app:layout_constraintTop_toBottomOf="@id/desc_start"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="3dp"
+                    />
+                <TextView
+                    android:id="@+id/desc_destiny"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Destino:"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/start"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    />
+                <TextView
+                    android:id="@+id/destiny"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Rua alves joão"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+
+                    app:layout_constraintTop_toBottomOf="@id/desc_destiny"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="3dp"
+                    />
+                <TextView
+                    android:id="@+id/desc_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Distância:"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/destiny"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    />
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "25 Km"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+
+                    app:layout_constraintTop_toBottomOf="@id/desc_distance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="3dp"
+                    />
+                <TextView
+                    android:id="@+id/desc_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo:"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@id/distance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="15dp"
+                    />
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Urbano"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+
+
+                    app:layout_constraintTop_toBottomOf="@id/desc_type"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="3dp"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="18dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:tint = "@color/white"
+        app:backgroundTint="@android:color/holo_red_light"
+        android:src="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
