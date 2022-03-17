@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "181583651764",
+    "project_id": "pedale-932b4",
+    "storage_bucket": "pedale-932b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181583651764:android:e95da59eeec6a6e64d08e1",
+        "android_client_info": {
+          "package_name": "com.example.pedal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181583651764-ivo10s8lor4pp63n55pvrphg24cp995r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.pedal",
+            "certificate_hash": "7956b874a7bb8418937a4f49d3e8e223b20fb411"
+          }
+        },
+        {
+          "client_id": "181583651764-pmm7obemgrl41emdc3tbmu69mrjg3eur.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD15jN_RQMDhwA8m8tl-iqmScjC4aCPAO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181583651764-pmm7obemgrl41emdc3tbmu69mrjg3eur.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

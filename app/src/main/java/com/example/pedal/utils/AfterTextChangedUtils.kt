@@ -15,7 +15,7 @@ fun TextView.afterTextChangedDelayed(afterTextChanged: (String) -> Unit) {
 
         override fun afterTextChanged(editable: Editable?) {
             timer?.cancel()
-            timer = object : CountDownTimer(1000, 1500) {
+            timer = object : CountDownTimer(500, 600) {
                 override fun onTick(millisUntilFinished: Long) {}
                 override fun onFinish() {
                     afterTextChanged.invoke(editable.toString())

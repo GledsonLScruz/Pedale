@@ -13,109 +13,162 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/wallpaper_ciclism"/>
+        android:src="@drawable/urbano"/>
 
-    <ScrollView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:backgroundTint="@color/white"
         android:layout_centerInParent="true"
-        android:layout_margin="18dp"
-        android:scrollbars="none">
+        android:layout_margin="18dp">
 
-        <androidx.cardview.widget.CardView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp">
+            android:padding="25dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+
+            <TextView
+                android:id="@+id/Pedal_partida_txt"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/ponto_de_partida"
+                android:textSize="24sp"
+
+                android:textStyle="bold"
+                android:textColor="@color/black"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                android:layout_marginTop="10dp"
+                />
+
+            <AutoCompleteTextView
+                android:id="@+id/partida_pedal_input"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="25dp">
 
-                <TextView
-                    android:id="@+id/Pedal_data_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Data"
-                    android:textSize="24dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
+                android:hint="@string/Hint_partida_pedal"
+                android:padding="12dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
 
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    />
+                android:drawableTint="@android:color/darker_gray"
+                android:textColorHint="@android:color/darker_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Pedal_partida_txt"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="5dp"/>
+            <TextView
+                android:id="@+id/Pedal_chegada_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/destino"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/partida_pedal_input"
+
+                android:layout_marginTop="10dp"
+                />
+
+            <AutoCompleteTextView
+                android:id="@+id/chegada_pedal_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Hint_destino_pedal"
+                android:padding="12dp"
+                android:textSize="15sp"
+                android:drawableTint="@android:color/darker_gray"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/Pedal_chegada_txt"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="5dp"/>
+
+            <TextView
+                android:id="@+id/Pedal_distancia_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Distância"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+
+                app:layout_constraintTop_toBottomOf="@id/chegada_pedal_input"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/distancia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.0"
+                android:textSize="16dp"
+                android:textColor="@color/black"
+
+                app:layout_constraintTop_toBottomOf="@id/Pedal_distancia_txt"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/date_pedal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/Pedal_data_txt"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:padding="5dp">
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/ic_calendar"/>
-                        <TextView
-                            android:id="@+id/data_selecionada"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Selecione a data"
-                            android:textSize="16dp"
-                            android:layout_marginStart="3dp"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/Pedal_partida_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Ponto de partida"
-                    android:textSize="24dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/date_pedal"
-
-                    android:layout_marginTop="10dp"
-                    />
-
-                <AutoCompleteTextView
-                    android:id="@+id/partida_pedal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Digite o ponto de partida do pedal"
-                    android:padding="12dp"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/Pedal_partida_txt"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:drawableStart="@drawable/ic_location"
-                    android:drawablePadding="5dp"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="200dp"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/partida_pedal_input"
+                app:layout_constraintStart_toStartOf="@id/partida_pedal_input"
+                app:layout_constraintEnd_toEndOf="@id/partida_pedal_input">
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/partida_recycler"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/partida_pedal"
-                    app:layout_constraintStart_toStartOf="@id/partida_pedal"
-                    app:layout_constraintEnd_toEndOf="@id/partida_pedal"
-                    tools:listitem="@layout/adress_item"
-                    android:visibility="visible"
-                    android:clickable="true"
-                    android:focusable="true"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-    </ScrollView>
+
+                    android:visibility="gone"
+                    android:clickable="false"
+                    android:focusable="false"/>
+
+            </ScrollView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxHeight="200dp"
+                android:scrollbars="none"
+                app:layout_constraintTop_toBottomOf="@id/chegada_pedal_input"
+                app:layout_constraintStart_toStartOf="@id/chegada_pedal_input"
+                app:layout_constraintEnd_toEndOf="@id/chegada_pedal_input">
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/chegada_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:visibility="gone"
+                    android:clickable="false"
+                    android:focusable="false"/>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/back_fab"
@@ -129,8 +182,8 @@
         android:focusable="true"
         android:src="@drawable/ic_back"
 
-        app:backgroundTint="@color/transparent"
-        app:tint="@color/white" />
+        app:backgroundTint="@color/white"
+        app:tint="@color/black" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/foward_fab"
@@ -142,9 +195,9 @@
         android:layout_marginBottom="18dp"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_forward"
+        android:src="@drawable/ic_baseline_check_24"
 
-        app:backgroundTint="@color/purple_500"
+        app:backgroundTint="@color/green"
         app:tint="@color/white" />
 
 </RelativeLayout>

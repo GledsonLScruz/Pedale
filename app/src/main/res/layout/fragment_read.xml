@@ -73,6 +73,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
+                    android:textColor="@android:color/darker_gray"
                     />
                 <TextView
                     android:id="@+id/description"
@@ -81,6 +82,7 @@
                     android:text = "Passeio em grupo com amigos"
                     android:textSize="18sp"
                     android:textStyle="bold"
+                    android:textColor="@android:color/darker_gray"
 
 
                     app:layout_constraintTop_toBottomOf="@id/desc_title"
@@ -94,6 +96,7 @@
                     android:layout_height="wrap_content"
                     android:text="Data:"
                     android:textSize="16sp"
+                    android:textColor="@android:color/darker_gray"
                     app:layout_constraintTop_toBottomOf="@id/description"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="20dp"
@@ -108,6 +111,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
 
+                    android:textColor="@android:color/darker_gray"
 
                     app:layout_constraintTop_toBottomOf="@id/desc_date"
                     app:layout_constraintStart_toStartOf="parent"
@@ -120,6 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="Ponto de partida:"
                     android:textSize="16sp"
+                    android:textColor="@android:color/darker_gray"
                     app:layout_constraintTop_toBottomOf="@id/date"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="20dp"
@@ -131,6 +136,7 @@
                     android:layout_height="wrap_content"
                     android:text = "Rua alves joão"
                     android:textSize="18sp"
+                    android:textColor="@android:color/darker_gray"
                     android:textStyle="bold"
 
 
@@ -145,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:text="Destino:"
                     android:textSize="16sp"
+                    android:textColor="@android:color/darker_gray"
                     app:layout_constraintTop_toBottomOf="@id/start"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="20dp"
@@ -158,6 +165,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold"
 
+                    android:textColor="@android:color/darker_gray"
 
                     app:layout_constraintTop_toBottomOf="@id/desc_destiny"
                     app:layout_constraintStart_toStartOf="parent"
@@ -169,6 +177,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Distância:"
+                    android:textColor="@android:color/darker_gray"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/destiny"
                     app:layout_constraintStart_toStartOf="parent"
@@ -181,6 +190,7 @@
                     android:layout_height="wrap_content"
                     android:text = "25 Km"
                     android:textSize="18sp"
+                    android:textColor="@android:color/darker_gray"
                     android:textStyle="bold"
 
 
@@ -194,6 +204,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tipo:"
+                    android:textColor="@android:color/darker_gray"
                     android:textSize="16sp"
                     app:layout_constraintTop_toBottomOf="@id/distance"
                     app:layout_constraintStart_toStartOf="parent"
@@ -206,6 +217,7 @@
                     android:layout_height="wrap_content"
                     android:text = "Urbano"
                     android:textSize="18sp"
+                    android:textColor="@android:color/darker_gray"
                     android:textStyle="bold"
 
 

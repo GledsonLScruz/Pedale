@@ -2,4 +2,8 @@
     <string name="app_name">Pedale</string>
     <string name="urbano_txt">Urbano</string>
     <string name="trilha_txt">Trilha</string>
+    <string name="ponto_de_partida">Ponto de partida</string>
+    <string name="Hint_partida_pedal">Qual o ponto de partida do pedal?</string>
+    <string name="destino">Destino</string>
+    <string name="Hint_destino_pedal">Qual é o destino do pedal?</string>
 </resources>

@@ -1,57 +1,33 @@
 package com.example.pedal.fragments.add
 
-import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.example.pedal.MainActivity
 import com.example.pedal.R
-import com.example.pedal.data.network.modelresponse.Endpoint
-import com.example.pedal.data.network.modelresponse.Posts
-import com.example.pedal.data.network.utils.NetworkUtils
-import com.example.pedal.model.User
 import com.example.pedal.viewmodel.UserViewModel
-import com.example.pedal.databinding.FragmentAddBinding
 import com.example.pedal.databinding.FragmentAddTwoBinding
-import com.example.pedal.model.Adress
 import com.example.pedal.utils.afterTextChangedDelayed
 import com.example.pedal.utils.hideKeyboard
-import com.example.pedal.utils.navigateWithAnimations
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 
 class AddTwoFragment : Fragment() {
 
     private var _binding: FragmentAddTwoBinding? = null
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     private lateinit var mUserViewModel : UserViewModel
-    private lateinit var adapter: AdressAdapter
-
-    private lateinit var datepedals : String
+    private lateinit var adapterPartida: AdressAdapter
+    private lateinit var adapterChegada: AdressAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,19 +38,29 @@ class AddTwoFragment : Fragment() {
         val view = binding.root
 
         mUserViewModel = (activity as MainActivity).viewmodel()
+
         changeUI(mUserViewModel.type.value.toString())
 
-        datepedals = "0/0/0"
-        adapter = AdressAdapter(mUserViewModel)
-        val recyclerView = binding.recyclerView
-        recyclerView.adapter = adapter
+
+        adapterPartida = AdressAdapter(mUserViewModel,false)
+        val recyclerView = binding.partidaRecycler
+        recyclerView.adapter = adapterPartida
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        adapterChegada = AdressAdapter(mUserViewModel,true)
+        val recyclerView2 = binding.chegadaRecycler
+        recyclerView2.adapter = adapterChegada
+        recyclerView2.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.fowardFab.visibility = View.GONE
+        binding.fowardFab.isClickable = false
+
+        mUserViewModel.recyclerChegadaIsView.value = false
+        mUserViewModel.recyclerPartidaIsView.value = false
 
         return view
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fowardFab.setOnClickListener{
@@ -83,62 +69,90 @@ class AddTwoFragment : Fragment() {
         binding.backFab.setOnClickListener {
             findNavController().navigateUp()
         }
-        binding.datePedal.setOnClickListener {
-            val c = Calendar.getInstance()
-            val year = c.get(Calendar.YEAR)
-            val month = c.get(Calendar.MONTH)
-            val day = c.get(Calendar.DAY_OF_MONTH)
 
 
-            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-
-                datepedals = "" + dayOfMonth + "/" + monthOfYear + "/" + year
-                binding.dataSelecionada.text = "$dayOfMonth/$monthOfYear/$year"
-
-            }, year, month, day)
-
-            dpd.show()
-        }
-
-
-
-        mUserViewModel.recycler_is_view.observe(viewLifecycleOwner, Observer{ isVisible ->
+        mUserViewModel.recyclerPartidaIsView.observe(viewLifecycleOwner, Observer{ isVisible ->
             if (isVisible){
-                binding.recyclerView.visibility = View.VISIBLE
-                binding.recyclerView.isClickable = true
-                binding.recyclerView.isFocusable = true
-                binding.recyclerView.bringToFront()
+                binding.partidaRecycler.visibility = View.VISIBLE
+                binding.partidaRecycler.isClickable = true
+                binding.partidaRecycler.isFocusable = true
+                binding.partidaRecycler.bringToFront()
             }
             else {
-                binding.recyclerView.isClickable = false
-                binding.recyclerView.isFocusable = false
-                binding.recyclerView.visibility = View.GONE
+                binding.partidaRecycler.isClickable = false
+                binding.partidaRecycler.isFocusable = false
+                binding.partidaRecycler.visibility = View.GONE
             }
         })
 
         //firstadress
-        binding.partidaPedal.setOnFocusChangeListener { _, hasFocus ->
+        binding.partidaPedalInput.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.partidaPedal.afterTextChangedDelayed { input ->
+                binding.partidaPedalInput.afterTextChangedDelayed { input ->
                     mUserViewModel.getDataFromApi(input)
                 }
-                mUserViewModel.recycler_is_view.value = true
+                mUserViewModel.recyclerPartidaIsView.value = true
             } else {
-                mUserViewModel.recycler_is_view.value = false
+                mUserViewModel.recyclerPartidaIsView.value = false
             }
         }
         //quando o recebe o valor
-        mUserViewModel.response_data.observe(viewLifecycleOwner, Observer{ data ->
-            adapter.setData(data)
+        mUserViewModel.responseData.observe(viewLifecycleOwner, Observer{ data ->
+            adapterPartida.setData(data)
         })
         // quando o endereço for escolhido
-        mUserViewModel.adressSelected.observe(viewLifecycleOwner, Observer{ adress ->
+        mUserViewModel.partida.observe(viewLifecycleOwner, Observer{ adress ->
             hideKeyboard()
-            binding.partidaPedal.clearFocus()
-            binding.partidaPedal.setText(adress)
-            mUserViewModel.recycler_is_view.value = false
+            binding.partidaPedalInput.clearFocus()
+            binding.partidaPedalInput.setText(adress)
+            mUserViewModel.recyclerPartidaIsView.value = false
         })
 
+
+
+        mUserViewModel.recyclerChegadaIsView.observe(viewLifecycleOwner, Observer{ isVisible ->
+            if (isVisible){
+                binding.chegadaRecycler.visibility = View.VISIBLE
+                binding.chegadaRecycler.isClickable = true
+                binding.chegadaRecycler.isFocusable = true
+                binding.chegadaRecycler.bringToFront()
+            }
+            else {
+                binding.chegadaRecycler.isClickable = false
+                binding.chegadaRecycler.isFocusable = false
+                binding.chegadaRecycler.visibility = View.GONE
+            }
+        })
+
+        //Secondadress
+        binding.chegadaPedalInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.chegadaPedalInput.afterTextChangedDelayed { input ->
+                    mUserViewModel.getDataFromApi(input)
+                }
+                mUserViewModel.recyclerChegadaIsView.value = true
+            } else {
+                mUserViewModel.recyclerChegadaIsView.value = false
+            }
+        }
+        //quando o recebe o valor
+        mUserViewModel.responseData.observe(viewLifecycleOwner, Observer{ data ->
+            adapterChegada.setData(data)
+        })
+        // quando o endereço for escolhido
+        mUserViewModel.chegada.observe(viewLifecycleOwner, Observer{ adress ->
+            hideKeyboard()
+            binding.chegadaPedalInput.clearFocus()
+            binding.chegadaPedalInput.setText(adress)
+            mUserViewModel.recyclerChegadaIsView.value = false
+            binding.fowardFab.visibility = View.VISIBLE
+            binding.fowardFab.isClickable = true
+        })
+
+        
+        mUserViewModel.distancia.observe(viewLifecycleOwner, Observer { distancia ->
+            binding.distancia.text = distancia
+        })
 
     }
 
@@ -150,13 +164,10 @@ class AddTwoFragment : Fragment() {
 
 
     private fun insertData() {
-        //val date = binding.dataPedal.text.toString()
-        val start = binding.partidaPedal.text.toString()
 
-
-        if(!(TextUtils.isEmpty(start))){
-            mUserViewModel.parttwo(start,datepedals)
-            findNavController().navigateWithAnimations(AddTwoFragmentDirections.actionAddTwoFragmentToAddThreeFragment())
+        if(!(TextUtils.isEmpty(binding.partidaPedalInput.toString())) && !(TextUtils.isEmpty(binding.chegadaPedalInput.toString()))){
+            mUserViewModel.createnewtour()
+            findNavController().navigate(R.id.action_addTwoFragment_to_listFragment)
         }else{
             Toast.makeText(requireContext(), "Preencha todos os campos",Toast.LENGTH_SHORT).show()
         }
@@ -164,12 +175,10 @@ class AddTwoFragment : Fragment() {
     }
 
     private fun changeUI(check : String){
-        if (check == "Urbano"){
-            binding.fowardFab.setBackgroundColor(resources.getColor(R.color.purple_500))
+        if (check.equals("Urbano",true)){
             binding.img.load(R.drawable.urbano)
         }
-        if (check == "Trilha"){
-            binding.fowardFab.setBackgroundColor(resources.getColor(R.color.orange))
+        if (check.equals("Trilha",true)){
             binding.img.load(R.drawable.trilha)
         }
     }

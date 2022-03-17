@@ -11,7 +11,7 @@ import com.example.pedal.fragments.list.ListAdapter
 import com.example.pedal.model.Adress
 import com.example.pedal.viewmodel.UserViewModel
 
-class AdressAdapter(val vm : UserViewModel): RecyclerView.Adapter<AdressAdapter.MyViewHolder>() {
+class AdressAdapter(val vm : UserViewModel, val end: Boolean): RecyclerView.Adapter<AdressAdapter.MyViewHolder>() {
 
     private var userList = emptyList<Adress>()
 
@@ -31,10 +31,18 @@ class AdressAdapter(val vm : UserViewModel): RecyclerView.Adapter<AdressAdapter.
         holder.info.text = currentItem.infoadress
 
         holder.rowlayout.setOnClickListener {
-            vm.adressSelected(currentItem.infoadress)
-            vm.latlong(currentItem.lat,currentItem.long,vm.getDistance)
+            if(end){
+                vm.endPointSelected(
+                    currentItem.nameadress + " " + currentItem.infoadress,
+                    currentItem.lat,
+                    currentItem.long)
+            } else {
+                vm.startPointSelected(
+                    currentItem.nameadress + " " + currentItem.infoadress,
+                    currentItem.lat,
+                    currentItem.long)
+            }
         }
-
     }
 
     fun setData(user: List<Adress>){

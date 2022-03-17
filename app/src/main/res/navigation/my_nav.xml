@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/listFragment"
@@ -38,16 +38,7 @@
         android:label="fragment_add_two"
         tools:layout="@layout/fragment_add_two" >
         <action
-            android:id="@+id/action_addTwoFragment_to_addThreeFragment"
-            app:destination="@id/addThreeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/addThreeFragment"
-        android:name="com.example.pedal.fragments.add.AddThreeFragment"
-        android:label="fragment_add_three"
-        tools:layout="@layout/fragment_add_three" >
-        <action
-            android:id="@+id/action_addThreeFragment_to_listFragment"
+            android:id="@+id/action_addTwoFragment_to_listFragment"
             app:destination="@id/listFragment"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="true" />
@@ -89,9 +80,5 @@
         android:id="@+id/loginFragment"
         android:name="com.example.pedal.fragments.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment_to_listFragment"
-            app:destination="@id/listFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
 </navigation>

@@ -2,7 +2,6 @@ package com.example.pedal.viewmodel
 
 import android.app.Application
 import android.location.Location
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,7 +30,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         readAllData = repository.readAllData
     }
 
-    fun addUser(user: User){
+    private fun addUser(user: User){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addUser(user)
         }
@@ -53,93 +52,88 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         }
     }
 
-
-
     //Below is just about creation
-
-    private val _type = MutableLiveData<String>()
-    val type: LiveData<String>
-        get() = _type
-
-    private val _response_data = MutableLiveData<List<Adress>>()
-    val response_data: LiveData<List<Adress>>
-        get() = _response_data
-
-    private val _adressSelected = MutableLiveData<String>()
-    val adressSelected: LiveData<String>
-        get() = _adressSelected
-
-    val recycler_is_view: MutableLiveData<Boolean> = MutableLiveData()
-
-    var getDistance = false
+    private val _responseData = MutableLiveData<List<Adress>>()
+    val responseData: LiveData<List<Adress>>
+        get() = _responseData
 
 
-    fun getInfo(input: List<Adress>){
-        _response_data.value = input
-    }
 
-    fun adressSelected(adress:String) {
-        _adressSelected.value = adress
-    }
 
     private val _titulo: MutableLiveData<String> = MutableLiveData()
-    val titulopedal: LiveData<String>
-        get() = _titulo
     private val _desc: MutableLiveData<String> = MutableLiveData()
-    val descpedal: LiveData<String>
-        get() = _desc
     private val _date: MutableLiveData<String> = MutableLiveData()
-    val datepedal: LiveData<String>
-        get() = _date
-    private val _partida: MutableLiveData<String> = MutableLiveData()
-    val partida: LiveData<String>
-        get() = _partida
-    private val _chegada: MutableLiveData<String> = MutableLiveData()
-    val chegada: LiveData<String>
-        get() = _chegada
-    val _distancia: MutableLiveData<String> = MutableLiveData()
 
-    fun changetype(type: String){
-        _type.value = type
+    private val _partida: MutableLiveData<String> = MutableLiveData()
+    val partida : LiveData<String>
+        get() = _partida
+    private var latStart: Double = 0.0
+    private var longStart: Double = 0.0
+
+    private val _chegada: MutableLiveData<String> = MutableLiveData()
+    val chegada : LiveData<String>
+        get() = _chegada
+    private var latEnd: Double = 0.0
+    private var longEnd: Double = 0.0
+
+    private val _type = MutableLiveData<String>()
+    val type : LiveData<String>
+        get() = _type
+    private val _distancia: MutableLiveData<String> = MutableLiveData()
+    val distancia : LiveData<String>
+        get() = _distancia
+
+
+    val recyclerPartidaIsView: MutableLiveData<Boolean> = MutableLiveData()
+    val recyclerChegadaIsView: MutableLiveData<Boolean> = MutableLiveData()
+
+
+    //called from Recycler Listener to pass the selected adress
+    fun startPointSelected(start_point : String, lat: Double, long: Double){
+        _partida.value = start_point
+        latStart  = lat
+        longStart = long
+    }
+    fun endPointSelected(adress:String,lat: Double,long: Double) {
+        _chegada.value = adress
+        latEnd = lat
+        longEnd = long
+        distanceInMeter()
     }
 
-    fun partone(tituto: String, description:String){
+
+    fun setNameDescDateType(tituto: String, description:String, date:String, type:String){
         _titulo.value = tituto
         _desc.value = description
-    }
-    fun parttwo(partida:String,date:String){
         _date.value = date
-        _partida.value = partida
-    }
-    fun parttree(chegada:String){
-        _chegada.value = chegada
+        _type.value = type
     }
     fun createnewtour(){
         addUser(User(0,_titulo.value.toString(),_desc.value.toString(),_date.value.toString(),_partida.value.toString(),_chegada.value.toString(),_distancia.value.toString(),_type.value.toString()))
-        adressSelected("")
+        clearAllData()
+        getDataFromApi(" ")
     }
 
-    private fun distanceInMeter(startLat: Double, startLon: Double, endLat: Double, endLon: Double){
-        var results = FloatArray(1)
-        Location.distanceBetween(startLat,startLon,endLat,endLon,results)
-        val dist_final = String.format("%.2f", (results[0] / 1000))
-        _distancia.value = dist_final
+    private fun clearAllData() {
+        _titulo.value = ""
+        _desc.value = ""
+        _date.value = ""
+        _partida.value = ""
+        _chegada.value = ""
+        _distancia.value = ""
+        _type.value = ""
+        _responseData.value = emptyList()
+        latStart = 0.0
+        longStart = 0.0
+        latEnd = 0.0
+        longEnd = 0.0
     }
 
-    var lat_start: Double = 0.0
-    var long_start: Double = 0.0
-    var lat_end: Double = 0.0
-    var long_end: Double = 0.0
-
-    fun latlong(lat:Double,long: Double,fazer: Boolean){
-        if (fazer) {
-            lat_end = lat
-            long_end = long
-            distanceInMeter(lat_start,long_start,lat_end,long_end)
-        } else{
-            lat_start  = lat
-            long_start = long
-        }
+    private fun distanceInMeter(){
+        val results = FloatArray(1)
+        Location.distanceBetween(latStart,longStart,latEnd,longEnd,results)
+        val distFinal = String.format("%.2f", (results[0] / 1000))
+        _distancia.value = distFinal
     }
 
     fun getDataFromApi(text : String) {
@@ -155,7 +149,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
                 response.body()?.features?.forEach {
                     list.add(Adress(it.properties.address_line1,it.properties.address_line2,it.properties.lat,it.properties.lon))
                 }
-                getInfo(list)
+                _responseData.value = (list)
             }
             override fun onFailure(call: Call<Posts>, t: Throwable) {
             }

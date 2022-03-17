@@ -12,7 +12,8 @@
         android:layout_marginTop="6dip"
         android:text="Rua doutor sebastião pedrosa"
         android:textAlignment="viewStart"
-        android:textAppearance="?android:attr/textAppearanceListItem" />
+        android:textAppearance="?android:attr/textAppearanceListItem"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/info_adress"
@@ -22,6 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Jose pinheir,campina grande - PB 58-407548, Brazil"
         android:layout_below="@id/name_adress"
+        android:textColor="@android:color/darker_gray"
         />
     <View
         android:layout_width="match_parent"

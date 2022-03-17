@@ -51,6 +51,9 @@ class ListFragment : Fragment() {
         binding.delete.setOnClickListener {
             deleteAllUser()
         }
+        binding.perfilFab.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_profileFragment)
+        }
     }
 
     override fun onDestroyView() {
