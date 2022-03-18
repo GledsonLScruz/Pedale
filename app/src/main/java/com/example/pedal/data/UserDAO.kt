@@ -22,4 +22,7 @@ interface UserDao {
     @Query("SELECT * FROM user_table ORDER BY id ASC")
     fun redAllData(): LiveData<List<User>>
 
+    @Query("SELECT * FROM user_table ORDER BY id ASC")
+    suspend fun getAllData(): List<User>
+
 }

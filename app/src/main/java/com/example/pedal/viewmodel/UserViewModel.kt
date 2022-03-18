@@ -41,23 +41,26 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
             repository.updateUser(user)
         }
     }
+
     fun deleteUser(user: User){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteUser(user)
         }
     }
+
     fun deleteAllUser(){
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllUser()
         }
     }
+    fun getAllUsers(){
+    }
+
 
     //Below is just about creation
     private val _responseData = MutableLiveData<List<Adress>>()
     val responseData: LiveData<List<Adress>>
         get() = _responseData
-
-
 
 
     private val _titulo: MutableLiveData<String> = MutableLiveData()
@@ -93,6 +96,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         _partida.value = start_point
         latStart  = lat
         longStart = long
+        distanceInMeter()
     }
     fun endPointSelected(adress:String,lat: Double,long: Double) {
         _chegada.value = adress
@@ -111,7 +115,6 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
     fun createnewtour(){
         addUser(User(0,_titulo.value.toString(),_desc.value.toString(),_date.value.toString(),_partida.value.toString(),_chegada.value.toString(),_distancia.value.toString(),_type.value.toString()))
         clearAllData()
-        getDataFromApi(" ")
     }
 
     private fun clearAllData() {
@@ -127,6 +130,10 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         longStart = 0.0
         latEnd = 0.0
         longEnd = 0.0
+        getDataFromApi(" ")
+    }
+    fun changed(){
+        _responseData.value = emptyList()
     }
 
     private fun distanceInMeter(){

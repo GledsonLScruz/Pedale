@@ -36,9 +36,25 @@ class ListFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         mUserViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { user ->
-            adapter.setData(user)
+
+        mUserViewModel.readAllData.observe(viewLifecycleOwner, Observer { allData ->
+            adapter.setData(allData)
+            if (allData.toString() == "[]"){
+                binding.delete.visibility = View.GONE
+                binding.delete.isClickable = false
+                binding.recyclerview.visibility = View.GONE
+                binding.recyclerview.isClickable = false
+                binding.ctanew.visibility = View.VISIBLE
+            } else{
+                binding.delete.visibility = View.VISIBLE
+                binding.delete.isClickable = true
+                binding.recyclerview.visibility = View.VISIBLE
+                binding.recyclerview.isClickable = true
+                binding.ctanew.visibility = View.GONE
+            }
         })
+
+
         return view
     }
 

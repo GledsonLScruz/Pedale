@@ -1,5 +1,6 @@
 package com.example.pedal.fragments.add
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.TextUtils
@@ -20,6 +21,10 @@ import com.example.pedal.utils.hideKeyboard
 import com.example.pedal.utils.navigateWithAnimations
 import java.text.SimpleDateFormat
 import java.util.*
+import android.widget.DatePicker
+
+
+
 
 
 class AddFragment : Fragment() {
@@ -29,8 +34,7 @@ class AddFragment : Fragment() {
     private lateinit var mUserViewModel : UserViewModel
 
     private var type = "Urbano"
-
-    private var datepedals = " "
+    private var datepedals = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +47,6 @@ class AddFragment : Fragment() {
         mUserViewModel = (activity as MainActivity).viewmodel()
         changeUI()
 
-
-
-        val actualDate = Calendar.getInstance().time
-        datepedals = SimpleDateFormat.getDateTimeInstance().format(actualDate)
-        Toast.makeText(requireContext(),datepedals,Toast.LENGTH_SHORT).show()
         return view
     }
 
@@ -68,23 +67,18 @@ class AddFragment : Fragment() {
                 changeUI()
             }
             selectDate.setOnClickListener {
-                val c = Calendar.getInstance()
-                val year = c.get(Calendar.YEAR)
-                val month = c.get(Calendar.MONTH)
-                val day = c.get(Calendar.DAY_OF_MONTH)
-
-
-                val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener{ view, year, monthOfYear, dayOfMonth ->
-
-                    datepedals = "" + dayOfMonth + "/" + monthOfYear + "/" + year
-                    binding.dataSelecionada?.text = "$dayOfMonth/$monthOfYear/$year"
-
-                }, year, month, day)
-
-                dpd.show()
+                getdate()
             }
         }
+
+
+
+
+
+
     }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -94,15 +88,15 @@ class AddFragment : Fragment() {
         val name = binding.nomePedal.text.toString()
         val description = binding.descPedal.text.toString()
 
-        if(inputCheck(name,description)){
+        if(inputCheck(name,description,datepedals)){
             mUserViewModel.setNameDescDateType(name,description,datepedals,type)
             findNavController().navigateWithAnimations(AddFragmentDirections.actionAddFragmentToAddTwoFragment())
         }else{
             Toast.makeText(requireContext(), "Preencha todos os campos",Toast.LENGTH_SHORT).show()
         }
     }
-    private fun inputCheck(name : String, description: String) : Boolean{
-        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(description))
+    private fun inputCheck(name : String, description: String,date : String) : Boolean{
+        return !(TextUtils.isEmpty(name) || TextUtils.isEmpty(description) || TextUtils.isEmpty(date))
     }
 
     private fun changeUI(){
@@ -131,6 +125,24 @@ class AddFragment : Fragment() {
             }
         }
     }
+
+    private fun getdate() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(requireContext(),{ view, year, monthOfYear, dayOfMonth ->
+            datepedals = "" + dayOfMonth + "/" + monthOfYear + "/" + year
+            binding.dataSelecionada.text = datepedals
+        }, year, month, day)
+
+        val dp = dpd.datePicker
+        //Set the DatePicker minimum date selection to current date
+        dp.minDate = c.timeInMillis
+        dpd.show()
+    }
+
     private fun hideKeyboard() {
         val parentActivity = requireActivity()
         if (parentActivity is AppCompatActivity) {

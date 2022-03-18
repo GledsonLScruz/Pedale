@@ -1,14 +1,17 @@
 package com.example.pedal.fragments.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import coil.load
 import com.example.pedal.MainActivity
 import com.example.pedal.R
 import com.example.pedal.databinding.FragmentLoginBinding
-import com.example.pedal.databinding.FragmentProfileBinding
+import jp.wasabeef.glide.transformations.BlurTransformation
+
 
 class LoginFragment : Fragment() {
     private lateinit var binding : FragmentLoginBinding
@@ -28,6 +31,11 @@ class LoginFragment : Fragment() {
 
         binding.login.setOnClickListener {
             (activity as MainActivity).continueWithGoogle()
+        }
+        //https://cdn.discordapp.com/attachments/558087898705166346/954359818452349028/blur_1.png
+        binding.backgroundImg.load(R.drawable.blur){
+            crossfade(true)
+            crossfade(900)
         }
     }
 }

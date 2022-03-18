@@ -43,14 +43,14 @@ class AddTwoFragment : Fragment() {
 
 
         adapterPartida = AdressAdapter(mUserViewModel,false)
-        val recyclerView = binding.partidaRecycler
-        recyclerView.adapter = adapterPartida
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val recyclerViewPartida = binding.partidaRecycler
+        recyclerViewPartida.adapter = adapterPartida
+        recyclerViewPartida.layoutManager = LinearLayoutManager(requireContext())
 
         adapterChegada = AdressAdapter(mUserViewModel,true)
-        val recyclerView2 = binding.chegadaRecycler
-        recyclerView2.adapter = adapterChegada
-        recyclerView2.layoutManager = LinearLayoutManager(requireContext())
+        val recyclerViewChegada = binding.chegadaRecycler
+        recyclerViewChegada.adapter = adapterChegada
+        recyclerViewChegada.layoutManager = LinearLayoutManager(requireContext())
 
         binding.fowardFab.visibility = View.GONE
         binding.fowardFab.isClickable = false
@@ -103,8 +103,9 @@ class AddTwoFragment : Fragment() {
         // quando o endereço for escolhido
         mUserViewModel.partida.observe(viewLifecycleOwner, Observer{ adress ->
             hideKeyboard()
-            binding.partidaPedalInput.clearFocus()
             binding.partidaPedalInput.setText(adress)
+            mUserViewModel.changed()
+            binding.chegadaPedalInput.requestFocus()
             mUserViewModel.recyclerPartidaIsView.value = false
         })
 
@@ -142,7 +143,6 @@ class AddTwoFragment : Fragment() {
         // quando o endereço for escolhido
         mUserViewModel.chegada.observe(viewLifecycleOwner, Observer{ adress ->
             hideKeyboard()
-            binding.chegadaPedalInput.clearFocus()
             binding.chegadaPedalInput.setText(adress)
             mUserViewModel.recyclerChegadaIsView.value = false
             binding.fowardFab.visibility = View.VISIBLE
