@@ -29,7 +29,7 @@
         />
 
     <ImageView
-        android:src="@drawable/pedale_big"
+        android:src="@drawable/icon_pedale"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="90dp"

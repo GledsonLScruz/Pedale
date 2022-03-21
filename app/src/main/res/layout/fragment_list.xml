@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toTopOf="@id/background_recycler"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:src="@drawable/pedale_big"/>
+        android:src="@drawable/icon_pedale"/>
 
     <ImageView
         android:id="@+id/background_recycler"

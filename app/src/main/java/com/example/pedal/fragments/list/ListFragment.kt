@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pedal.R
 import com.example.pedal.viewmodel.UserViewModel
 import com.example.pedal.databinding.FragmentListBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class ListFragment : Fragment() {
 

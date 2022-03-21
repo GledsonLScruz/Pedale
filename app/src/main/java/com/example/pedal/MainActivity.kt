@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.example.pedal.model.User
 import com.example.pedal.viewmodel.UserViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -16,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
 
+    private lateinit var alldatafromdblocal : List<User>
+
     companion object {
         private const val RC_SIGN_IN = 120
     }
@@ -38,7 +41,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Thread.sleep(1500)
+
         setTheme(R.style.Theme_Pedal)
+
         setContentView(R.layout.activity_main)
 
 
@@ -57,6 +62,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
         checkAuth()
+
+        mUserViewModel.readAllData.observe(this, Observer { allData ->
+            alldatafromdblocal = allData
+        })
     }
 
     override fun onStart() {
@@ -66,14 +75,14 @@ class MainActivity : AppCompatActivity() {
 
     //Function that check if the user is alredy authenticated
     private fun checkAuth() {
-        val GoogleUser = GoogleSignIn.getLastSignedInAccount(this)
+        val CurrentUser = FirebaseAuth.getInstance().currentUser
 
         when {
-            GoogleUser != null -> {
-                UserConfig.id = GoogleUser.id.toString()
-                UserConfig.email = GoogleUser.email.toString()
-                UserConfig.name = GoogleUser.displayName.toString()
-                UserConfig.pic = GoogleUser.photoUrl.toString()
+            CurrentUser != null -> {
+                UserConfig.id = CurrentUser.uid
+                UserConfig.email = CurrentUser.email.toString()
+                UserConfig.name = CurrentUser.displayName.toString()
+                UserConfig.pic = CurrentUser.photoUrl.toString()
                 navController.navigate(R.id.listFragment)
             }
             UserConfig.id != "ID" -> {
@@ -159,6 +168,10 @@ class MainActivity : AppCompatActivity() {
 
     fun db(): FirebaseFirestore {
         return db
+    }
+
+    fun alldatafromviewmodel() : List<User>{
+        return alldatafromdblocal
     }
 
 }
