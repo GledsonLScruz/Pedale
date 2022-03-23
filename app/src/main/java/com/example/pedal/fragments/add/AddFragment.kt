@@ -133,7 +133,17 @@ class AddFragment : Fragment() {
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val dpd = DatePickerDialog(requireContext(),{ view, year, monthOfYear, dayOfMonth ->
-            datepedals = "" + dayOfMonth + "/" + monthOfYear + "/" + year
+            val Month : String = if (monthOfYear < 10){
+                "0" + monthOfYear
+            } else {
+                monthOfYear.toString()
+            }
+            val Day : String = if (dayOfMonth < 10 ){
+                "0" + dayOfMonth
+            } else {
+                dayOfMonth.toString()
+            }
+            datepedals = Day + "/" + Month + "/" + year
             binding.dataSelecionada.text = datepedals
         }, year, month, day)
 

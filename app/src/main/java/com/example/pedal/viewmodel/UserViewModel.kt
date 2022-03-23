@@ -117,6 +117,10 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
         clearAllData()
     }
 
+    fun createnewtourbybackup(user : User){
+        addUser(user)
+    }
+
     private fun clearAllData() {
         _titulo.value = ""
         _desc.value = ""

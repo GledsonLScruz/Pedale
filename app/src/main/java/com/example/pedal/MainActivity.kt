@@ -129,7 +129,8 @@ class MainActivity : AppCompatActivity() {
                         val user = hashMapOf(
                             "name" to UserConfig.name,
                             "email" to UserConfig.email,
-                            "pic" to UserConfig.pic
+                            "pic" to UserConfig.pic,
+                            "data" to emptyMap<String,String>()
                         )
 
                         db.collection("users").document(UserConfig.id)
@@ -138,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                             .addOnFailureListener { e -> Log.w("Firebase", "Error writing document", e) }
 
 
-                        navController.navigate(R.id.listFragment)
+                        navController.navigate(R.id.action_loginFragment_to_listFragment)
 
                     } else {
                         // If sign in fails, display a message to the user.

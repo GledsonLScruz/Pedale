@@ -68,17 +68,17 @@ class ReadFragment : Fragment() {
     }
     private fun deleteUser() {
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes"){ _,_ ->
+        builder.setPositiveButton("Sim"){ _,_ ->
             mUserViewModel.deleteUser(args.currentUser)
             Toast.makeText(
                 requireContext(),
-                "Sucessfully removed: ${args.currentUser.name}",
+                "Removido: ${args.currentUser.name}",
                 Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_readFragment_to_listFragment)
+            findNavController().navigateUp()
         }
-        builder.setNegativeButton("No"){_,_ ->}
+        builder.setNegativeButton("Não"){_,_ ->}
         builder.setTitle("Delete ${args.currentUser.name}?")
-        builder.setMessage("Are you sure you want to delete ${args.currentUser.name}?")
+        builder.setMessage("Tem certeza que deseja remover: ${args.currentUser.name}?")
         builder.create().show()
     }
 }

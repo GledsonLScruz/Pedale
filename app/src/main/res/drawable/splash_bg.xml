@@ -5,7 +5,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/icon_pedale"/>
+            android:src="@drawable/ok"/>
     </item>
 
 </layer-list>
