@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/listFragment">
 
     <fragment
         android:id="@+id/listFragment"
@@ -29,6 +29,9 @@
             app:exitAnim="@anim/slide_out_bottom"
             app:popEnterAnim="@anim/slide_in_bottom"
             app:popExitAnim="@anim/slide_out_top" />
+        <action
+            android:id="@+id/action_listFragment_to_loginFragment2"
+            app:destination="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFragment"
@@ -90,20 +93,31 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_profileFragment_to_loginFragment"
+            android:id="@+id/action_profileFragment_to_loadingFragment"
+            app:destination="@id/loadingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment2"
             app:destination="@id/loginFragment"
-            app:enterAnim="@anim/nav_default_enter_anim" />
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.pedal.fragments.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.example.pedal.fragments.profile.LoadingFragment"
+        android:label="fragment_loading"
+        tools:layout="@layout/fragment_loading" >
         <action
-            android:id="@+id/action_loginFragment_to_listFragment"
+            android:id="@+id/action_loadingFragment_to_listFragment"
             app:destination="@id/listFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
             app:popUpTo="@id/listFragment"
             app:popUpToInclusive="true" />
     </fragment>

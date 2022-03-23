@@ -60,52 +60,16 @@ class ProfileFragment : Fragment() {
         }
 
         binding.backup.setOnClickListener {
-            it.isClickable = false
-            val data = (activity as MainActivity).alldatafromviewmodel()
-            var count = 0
-            val size = data.size
-
-            db.collection("users").document(UserConfig.id).collection("data")
-                .get()
-                .addOnSuccessListener {
-                    val lista = mutableListOf<User>()
-                    for (doc in it){
-                        lista.add(doc.toObject())
-                    }
-                    lista.minus(data).forEach { user ->
-                        db.collection("users").document(UserConfig.id).collection("data")
-                            .document(user.id.toString())
-                            .delete()
-                    }
-                }
-
-            data .forEach { User ->
-                db.collection("users").document(UserConfig.id).collection("data").document(User.id.toString())
-                    .set(User)
-                    .addOnSuccessListener {
-                        count ++
-                        if(count == size){
-                            Toast.makeText(requireContext(),"Backup realizado com sucesso!",Toast.LENGTH_SHORT).show()
-                            findNavController().navigateUp()
-                        }
-                    }
+            if (muserViewModel.readAllData.value.isNullOrEmpty()) { Toast.makeText(requireContext(),"Crie pedais antes de fazer backup.", Toast.LENGTH_SHORT).show()}
+            else {
+                muserViewModel.backup()
+                findNavController().navigate(R.id.action_profileFragment_to_loadingFragment)
             }
-            it.isClickable = true
         }
 
         binding.download.setOnClickListener {
-            db.collection("users").document(UserConfig.id).collection("data")
-                .get().addOnSuccessListener { documentSnapshot ->
-                    var count = 0
-                    for (document in documentSnapshot){
-                        muserViewModel.createnewtourbybackup(document.toObject())
-                        count ++
-                        if (count == documentSnapshot.size()){
-                            Toast.makeText(requireContext(),"Dados restaurados!",Toast.LENGTH_SHORT).show()
-                            findNavController().navigateUp()
-                        }
-                    }
-            }
+            muserViewModel.download()
+            findNavController().navigate(R.id.action_profileFragment_to_loadingFragment)
         }
     }
 

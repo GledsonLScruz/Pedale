@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.pedal.MainActivity
 import com.example.pedal.R
@@ -36,6 +39,13 @@ class LoginFragment : Fragment() {
         binding.backgroundImg.load(R.drawable.blur){
             crossfade(true)
             crossfade(900)
+        }
+        registerDeviceBackStackCallback()
+
+    }
+    private fun registerDeviceBackStackCallback() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            Toast.makeText(requireContext(), "No", Toast.LENGTH_SHORT).show()
         }
     }
 }

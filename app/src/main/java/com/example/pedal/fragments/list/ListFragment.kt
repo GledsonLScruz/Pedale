@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pedal.MainActivity
 import com.example.pedal.R
 import com.example.pedal.viewmodel.UserViewModel
 import com.example.pedal.databinding.FragmentListBinding

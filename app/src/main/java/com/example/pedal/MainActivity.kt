@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
-        checkAuth()
 
         mUserViewModel.readAllData.observe(this, Observer { allData ->
             alldatafromdblocal = allData
@@ -74,20 +73,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Function that check if the user is alredy authenticated
-    private fun checkAuth() {
+    fun checkAuth() {
         val CurrentUser = FirebaseAuth.getInstance().currentUser
 
-        when {
-            CurrentUser != null -> {
-                UserConfig.id = CurrentUser.uid
-                UserConfig.email = CurrentUser.email.toString()
-                UserConfig.name = CurrentUser.displayName.toString()
-                UserConfig.pic = CurrentUser.photoUrl.toString()
-                navController.navigate(R.id.listFragment)
-            }
-            UserConfig.id != "ID" -> {
-                navController.navigate(R.id.listFragment)
-            }
+        if(CurrentUser == null) {
+            navController.navigate(R.id.action_listFragment_to_loginFragment2)
+        } else {
+            UserConfig.id = CurrentUser.uid.toString()
+            UserConfig.email = CurrentUser.email.toString()
+            UserConfig.name = CurrentUser.displayName.toString()
+            UserConfig.pic = CurrentUser.photoUrl.toString()
         }
     }
 
@@ -138,8 +133,7 @@ class MainActivity : AppCompatActivity() {
                             .addOnSuccessListener { Log.d("Firebase", "DocumentSnapshot successfully written!") }
                             .addOnFailureListener { e -> Log.w("Firebase", "Error writing document", e) }
 
-
-                        navController.navigate(R.id.action_loginFragment_to_listFragment)
+                        navController.navigateUp()
 
                     } else {
                         // If sign in fails, display a message to the user.
@@ -156,7 +150,7 @@ class MainActivity : AppCompatActivity() {
     fun logoutGoogle() {
             googleSignInClient.signOut().addOnCompleteListener {
                 FirebaseAuth.getInstance().signOut()
-                navController.navigate(R.id.loginFragment)
+                navController.navigate(R.id.action_profileFragment_to_loginFragment2)
                 UserConfig.email = "EMAIL"
                 UserConfig.id = "ID"
                 UserConfig.name = "NAME"
@@ -170,9 +164,4 @@ class MainActivity : AppCompatActivity() {
     fun db(): FirebaseFirestore {
         return db
     }
-
-    fun alldatafromviewmodel() : List<User>{
-        return alldatafromdblocal
-    }
-
 }

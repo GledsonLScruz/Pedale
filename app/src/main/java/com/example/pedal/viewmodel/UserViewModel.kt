@@ -2,10 +2,14 @@ package com.example.pedal.viewmodel
 
 import android.app.Application
 import android.location.Location
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
+import com.example.pedal.MainActivity
+import com.example.pedal.UserConfig
 import com.example.pedal.data.UserDatabase
 import com.example.pedal.data.network.modelresponse.Endpoint
 import com.example.pedal.data.network.modelresponse.Posts
@@ -13,6 +17,10 @@ import com.example.pedal.data.network.utils.NetworkUtils
 import com.example.pedal.model.Adress
 import com.example.pedal.repository.UserRepository
 import com.example.pedal.model.User
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -23,6 +31,7 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
 
     val readAllData : LiveData<List<User>>
     private val repository : UserRepository
+    private val db = Firebase.firestore
 
     init{
         val userDao = UserDatabase.getDatabase(application).userDao()
@@ -53,7 +62,58 @@ class UserViewModel(application : Application) :AndroidViewModel(application) {
             repository.deleteAllUser()
         }
     }
-    fun getAllUsers(){
+
+    var status_backup : MutableLiveData<Boolean> = MutableLiveData(false)
+
+    fun backup(){
+        val data = readAllData.value!!
+
+        db.collection("users").document(UserConfig.id).collection("data")
+            .get()
+            .addOnSuccessListener {
+                val lista = mutableListOf<User>()
+                for (doc in it){
+                    lista.add(doc.toObject())
+                }
+                lista.minus(data).forEach {  user ->
+                    db.collection("users").document(UserConfig.id).collection("data")
+                        .document(user.id.toString())
+                        .delete()
+                        .addOnSuccessListener {
+                            status_backup.value = true
+                        }
+                        .addOnFailureListener{
+                            status_backup.value = false
+                        }
+                }
+            }
+        data.forEach { User ->
+            db.collection("users").document(UserConfig.id).collection("data").document(User.id.toString())
+                .set(User)
+                .addOnSuccessListener {
+                    status_backup.value = true
+                }
+                .addOnFailureListener{
+                    status_backup.value = false
+                }
+        }
+    }
+    fun download(){
+        db.collection("users").document(UserConfig.id).collection("data")
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                var count = 0
+                for (document in documentSnapshot){
+                    createnewtourbybackup(document.toObject())
+                    count ++
+                    if (count == documentSnapshot.size()){
+                        status_backup.value = true
+                    }
+                }
+            }
+            .addOnFailureListener{
+                status_backup.value = false
+            }
     }
 
 
