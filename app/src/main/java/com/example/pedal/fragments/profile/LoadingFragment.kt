@@ -7,8 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.pedal.MainActivity
@@ -33,8 +32,10 @@ class LoadingFragment : Fragment() {
         muserViewModel = (activity as MainActivity).viewmodel()
         binding.anim.apply {
             setAnimation(R.raw.loading)
-            repeatCount = 2
+            repeatCount = 3
+            speed = 3f
             playAnimation()
+
         }
 
         return view
@@ -43,53 +44,57 @@ class LoadingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        registerDeviceBackStackCallback()
+
         Handler(Looper.getMainLooper()).postDelayed({
             if (muserViewModel.status_backup.value!!){
-            binding.anim.apply {
-                setAnimation(R.raw.load_sucess)
-                playAnimation()
-                repeatCount = 0
-                addAnimatorListener(object : Animator.AnimatorListener{
-                    override fun onAnimationRepeat(animation: Animator?) {
-                    }
+                binding.textLoading.text = "Concluído!"
+                binding.anim.apply {
+                    setAnimation(R.raw.load_sucess)
+                    speed = 2f
+                    playAnimation()
+                    repeatCount = 0
+                    addAnimatorListener(object : Animator.AnimatorListener{
+                        override fun onAnimationRepeat(animation: Animator?) {
 
-                    override fun onAnimationEnd(animation: Animator?) {
-                        findNavController().navigate(R.id.action_loadingFragment_to_listFragment)
-                    }
+                        }
+                        override fun onAnimationEnd(animation: Animator?) {
+                            findNavController().navigate(R.id.action_loadingFragment_to_listFragment)
+                        }
+                        override fun onAnimationCancel(animation: Animator?) {
 
-                    override fun onAnimationCancel(animation: Animator?) {
-                    }
+                        }
+                        override fun onAnimationStart(animation: Animator?) {
 
-                    override fun onAnimationStart(animation: Animator?) {
-                    }
+                        }
+                    })
+                }
+            } else {
+                binding.textLoading.text = "Erro!"
+                binding.anim.apply {
+                    setAnimation(R.raw.load_error)
+                    speed = 2f
+                    playAnimation()
+                    repeatCount = 0
+                    addAnimatorListener(object : Animator.AnimatorListener{
+                        override fun onAnimationRepeat(animation: Animator?) {
 
-                })
+                        }
+                        override fun onAnimationEnd(animation: Animator?) {
+                            findNavController().navigate(R.id.action_loadingFragment_to_listFragment)
+                        }
 
-            }
+                        override fun onAnimationCancel(animation: Animator?) {
+                        }
+                        override fun onAnimationStart(animation: Animator?) {
 
-        } else {
-            binding.anim.apply {
-                setAnimation(R.raw.load_error)
-                playAnimation()
-                repeatCount = 0
-                addAnimatorListener(object : Animator.AnimatorListener{
-                    override fun onAnimationRepeat(animation: Animator?) {
-                    }
-
-                    override fun onAnimationEnd(animation: Animator?) {
-                        findNavController().navigate(R.id.action_loadingFragment_to_listFragment)
-                    }
-
-                    override fun onAnimationCancel(animation: Animator?) {
-                    }
-
-                    override fun onAnimationStart(animation: Animator?) {
-                    }
-
-                })
-
-            }
+                        }
+                    })
+                }
+            } }, 2000)
+    }
+    private fun registerDeviceBackStackCallback() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
         }
-        }, 2000)
     }
 }

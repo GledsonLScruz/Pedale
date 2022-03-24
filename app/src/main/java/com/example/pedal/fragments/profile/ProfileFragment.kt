@@ -1,7 +1,10 @@
 package com.example.pedal.fragments.profile
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +15,11 @@ import androidx.navigation.fragment.findNavController
 import coil.load
 import coil.size.Scale
 import coil.transform.CircleCropTransformation
+import com.anychart.AnyChart
+import com.anychart.AnyChartView
+import com.anychart.chart.common.dataentry.DataEntry
+import com.anychart.chart.common.dataentry.ValueDataEntry
+import com.anychart.palettes.RangeColors
 import com.example.pedal.MainActivity
 import com.example.pedal.R
 import com.example.pedal.UserConfig
@@ -25,6 +33,7 @@ import kotlin.concurrent.timer
 
 class ProfileFragment : Fragment() {
 
+    private var chart : AnyChartView? = null
     private lateinit var binding : FragmentProfileBinding
     private lateinit var db : FirebaseFirestore
     private lateinit var muserViewModel: UserViewModel
@@ -39,6 +48,9 @@ class ProfileFragment : Fragment() {
 
         db = (activity as MainActivity).db()
         muserViewModel = (activity as MainActivity).viewmodel()
+
+        chart = binding.chart
+        chartfuncion()
 
         return view
     }
@@ -71,58 +83,47 @@ class ProfileFragment : Fragment() {
             muserViewModel.download()
             findNavController().navigate(R.id.action_profileFragment_to_loadingFragment)
         }
+
+
+
     }
 
-    private fun transformToFirebase(data : List<User>): Map<String,Map<String,String>>{
-        val map = mutableMapOf<String,Map<String,String>>()
-        var count = 0
-
-        data.forEach { User ->
-            val city = hashMapOf(
-                "name" to User.name,
-                "description" to User.description,
-                "date" to User.date,
-                "start" to User.start,
-                "destiny" to User.destiny,
-                "distance" to User.distance,
-                "type" to User.type
-            )
-            count ++
-            map.put(count.toString(),city)
-
+    private fun chartfuncion() {
+        val pie = AnyChart.pie()
+        var n_urbano = 0
+        var n_trilha = 0
+        pie.title("Meus Pedais")
+        muserViewModel.readAllData.value?.forEach { user ->
+            if (user.type == "Urbano"){
+                n_urbano ++
+            } else {
+                n_trilha ++
+            }
         }
-        return map
-    }
-    private fun transformFromFirebase(download : Map<String,Map<String,String>>) :List<User>{
-        val result = mutableListOf<User>()
-        download.values.forEach { map ->
-            result.add(User(0, map["name"].toString(),
-                map["description"].toString(),
-                map["date"].toString(),
-                map["start"].toString(),
-                map["destiny"].toString(),
-                map["distance"].toString(),
-                map["type"].toString()))
+        val values = listOf(n_urbano,n_trilha)
 
+        val type = listOf("Urbano", "Trilha")
+        val datapiechart : MutableList<DataEntry> = mutableListOf()
+
+        for (index in values.indices){
+            datapiechart.add(ValueDataEntry(type.elementAt(index),values.elementAt(index)))
         }
-        return result
+        pie.data(datapiechart)
+        chart!!.setChart(pie)
+
+
+
     }
 
     private fun logoutBtn() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setPositiveButton("Sim"){ _,_ ->
             (activity as MainActivity).logoutGoogle()
+            muserViewModel.deleteAllUser()
         }
         builder.setNegativeButton("Não"){_,_ ->}
         builder.setTitle("Desconectar?")
-        builder.setMessage("Tem certeza que deseja sair da sua conta?\nSeus dados não salvos serão perdidos.")
+        builder.setMessage("Ao desconectar seus pedais não salvos serão perdidos.")
         builder.create().show()
     }
 }
-
-data class City (
-    val a : List<User> = emptyList(),
-    val b : String = "a",
-    val c : String = "b",
-    val d : String = "c"
-        )

@@ -1,6 +1,7 @@
 package com.example.pedal.fragments.login
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +46,6 @@ class LoginFragment : Fragment() {
     }
     private fun registerDeviceBackStackCallback() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "No", Toast.LENGTH_SHORT).show()
         }
     }
 }

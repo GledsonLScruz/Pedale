@@ -103,4 +103,6 @@ dependencies {
     //lotie
     implementation 'com.airbnb.android:lottie:5.0.3'
 
+    implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
+
 }
