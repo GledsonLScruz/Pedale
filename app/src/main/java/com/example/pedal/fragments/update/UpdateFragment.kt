@@ -36,12 +36,12 @@ class UpdateFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.name.setText(args.currentUser.name)
-        binding.description.setText(args.currentUser.description)
-        binding.date.setText(args.currentUser.date)
-        binding.start.setText(args.currentUser.start)
-        binding.destiny.setText(args.currentUser.destiny)
-        binding.distance.setText(args.currentUser.distance)
+        binding.nomePedal.setText(args.currentUser.name)
+        binding.descPedal.setText(args.currentUser.description)
+        binding.dataSelecionada.setText(args.currentUser.date)
+        //binding.start.setText(args.currentUser.start)
+        //binding.destiny.setText(args.currentUser.destiny)
+        //binding.distance.setText(args.currentUser.distance)
 
         changeUI(args.currentUser.type)
 
@@ -49,7 +49,7 @@ class UpdateFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.update.setOnClickListener {
+        binding.nomePedal.setOnClickListener {
             updateItem()
         }
         mUserViewModel.type.observe(viewLifecycleOwner, Observer { checked ->
@@ -57,16 +57,17 @@ class UpdateFragment : Fragment() {
         })
     }
     private fun updateItem(){
-        val name = binding.name.text.toString()
-        val description = binding.description.text.toString()
-        val date = binding.date.text.toString()
-        val start = binding.start.text.toString()
-        val destiny = binding.destiny.text.toString()
-        val distance = binding.distance.text.toString()
+        val name = binding.nomePedal.text.toString()
+        val description = binding.descPedal.text.toString()
+        val date = binding.dataSelecionada.text.toString()
+        //val start = binding.start.text.toString()
+        //val destiny = binding.destiny.text.toString()
+        //val distance = binding.distance.text.toString()
 
-        if (inputCheck(name,description,date,start,destiny,distance)){
-            val updateUser = User(args.currentUser.id,name,description,date,start,destiny,distance,type)
-            mUserViewModel.updateUser(updateUser)
+        //if (inputCheck(name,description,date,start,destiny,distance)){
+        if (inputCheck(name,description,date,"","","")){
+            //val updateUser = User(args.currentUser.id,name,description,date,start,destiny,distance,type)
+            //mUserViewModel.updateUser(updateUser)
             Toast.makeText(requireContext(),"Updated Sucessfully",Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
@@ -89,8 +90,8 @@ class UpdateFragment : Fragment() {
                 crossfade(true)
                 crossfade(400)
             }
-            binding.update.setBackgroundColor(resources.getColor(R.color.purple_500))
-            binding.distance.setTextColor(resources.getColor(R.color.purple_500))
+            //binding.update.setBackgroundColor(resources.getColor(R.color.purple_500))
+            //.distance.setTextColor(resources.getColor(R.color.purple_500))
             binding.urbano.isChecked = true
             type = "Urbano"
         }
@@ -99,8 +100,8 @@ class UpdateFragment : Fragment() {
                 crossfade(true)
                 crossfade(400)
             }
-            binding.update.setBackgroundColor(resources.getColor(R.color.orange))
-            binding.distance.setTextColor(resources.getColor(R.color.orange))
+            //binding.update.setBackgroundColor(resources.getColor(R.color.orange))
+            //binding.distance.setTextColor(resources.getColor(R.color.orange))
             binding.trilha.isChecked = true
             type = "Trilha"
         }
