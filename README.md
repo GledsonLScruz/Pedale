@@ -4,8 +4,8 @@
 ## Sobre o App 📱
 
 <h3 align="center">
-Pedale é organizador de pedais que te auxilia com autocomplete dos endereços,<br />
-  cálculo da distância, visualização de rota, organização, análise de estatísticas <br />
+Pedale é organizador de pedais que te auxilia com autocomplete dos endereços,
+  cálculo da distância, organização, análise de estatísticas
   por gráfico e tudo isso com backup na nuvem e uma interface agradável.
 </h3>
 
