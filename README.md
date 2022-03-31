@@ -18,7 +18,6 @@ Pedale é organizador de pedais que te auxilia com autocomplete dos endereços,
 * Room para persistência de dados
 * Retrofit para consumo de API Rest que autocompleta endereços por meio de Coroutines
 * Firebase para Crashlytics, Authentication e Backup de dados na nuvem.
-* Arquitetura MVVM + clean utilizando Architecture components e código limpo.
 * Lottie para animações
 * Anychart para gráficos
 
